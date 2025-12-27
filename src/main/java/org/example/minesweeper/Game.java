@@ -1,10 +1,7 @@
 package org.example.minesweeper;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,8 +15,9 @@ public class Game {
     public Game(GridPane gamePane) {
         this.gamePane = gamePane;
 
-        setCols(16);
-        setRows(16);
+        // default
+        setCols(8);
+        setRows(8);
     }
 
     public void addCells() {
@@ -27,29 +25,11 @@ public class Game {
             for (int x = 0; x < getRows(); ++x) {
                 Button tmp = new Button();
 
+                // tmp -> todo: styleid, onAction
                 tmp.setText(x + ", " + y);
 
                 getGamePane().add(tmp, y, x);
             }
-        }
-    }
-
-    // sets Rows and Collums properties
-    public void setGrid() {
-        for (int i = 0; i < getCols(); ++i) {
-            ColumnConstraints tmp = new ColumnConstraints();
-            tmp.setHgrow(Priority.ALWAYS);
-            tmp.setFillWidth(true);
-
-            getGamePane().getColumnConstraints().add(tmp);
-        }
-
-        for (int i = 0; i < getRows(); ++i) {
-            RowConstraints tmp = new RowConstraints();
-            tmp.setVgrow(Priority.ALWAYS);
-            tmp.setFillHeight(true);
-
-            getGamePane().getRowConstraints().add(tmp);
         }
     }
 
@@ -70,10 +50,7 @@ public class Game {
     }
 
     public void clearGrid() {
-        // @ToDo clear childs before col/rows?
         getGamePane().getChildren().clear();
-        getGamePane().getColumnConstraints().clear();
-        getGamePane().getRowConstraints().clear();
     }
 
     public int getCols() {

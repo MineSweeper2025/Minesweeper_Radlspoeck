@@ -4,9 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.minesweeper.GameController">
@@ -14,17 +12,7 @@
       <ComboBox fx:id="difficultyComboBox" layoutX="14.0" layoutY="14.0" onAction="#onDifficultyOptionClicked" prefWidth="150.0" promptText="Difficulty" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <Label fx:id="timeLabel" contentDisplay="RIGHT" layoutX="482.0" layoutY="18.0" prefHeight="18.0" prefWidth="104.0" text="TimerPlaceholder" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
       <Line endX="469.800048828125" endY="-1.52587890625E-5" layoutX="115.0" layoutY="66.0" startX="-100.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="54.0" />
-      <GridPane fx:id="gamePane" layoutX="14.0" layoutY="84.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="84.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
+       <GridPane fx:id="gamePane" layoutX="14.0" layoutY="84.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="84.0"/>
       <Button layoutX="186.0" layoutY="15.0" mnemonicParsing="false" onAction="#onStartButtonClicked" text="Start" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="14.0" />
       <Button layoutX="246.0" layoutY="15.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Restart" AnchorPane.leftAnchor="246.0" AnchorPane.topAnchor="14.0" />
    </children>
