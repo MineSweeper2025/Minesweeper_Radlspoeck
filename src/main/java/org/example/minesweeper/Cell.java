@@ -21,23 +21,29 @@ public class Cell extends Button {
         switch (mouseEvent.getButton()) {
             // leftclick
             case MouseButton.PRIMARY -> {
-                if (this.isMine()) {
-                    this.getStyleClass().add("cell-style-mine");
-                    // end game
-                } else {
-                    this.getStyleClass().add("cell-style-exposed");
-                }
+                if (!this.isMarked) {
+                    if (this.isMine()) {
+                        this.getStyleClass().add("cell-style-mine");
+                        // end game
+                    } else {
+                        this.getStyleClass().add("cell-style-exposed");
+                    }
 
-                this.setDisable(true);
-                this.setExposed(true);
+                    this.setDisable(true);
+                    this.setExposed(true);
+                }
             }
             // rightclick
             case MouseButton.SECONDARY -> {
                 if (this.isMarked) {
+                    this.getStyleClass().remove("cell-style-marked");
                     this.getStyleClass().add("cell-style-default");
+                    this.setText("");
                     this.setMarked(false);
                 } else {
+                    this.getStyleClass().remove("cell-style-default");
                     this.getStyleClass().add("cell-style-marked");
+                    this.setText("!");
                     this.setMarked(true);
                 }
             }

@@ -1,0 +1,26 @@
+.button {
+    -fx-background-color: #3b82f6;
+    -fx-border-color: #000000;
+    -fx-alignment: center;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-border-color: #a20fb0;
+}
+
+.cell-style-default {
+    -fx-background-color: #ff0000;
+}
+
+.cell-style-marked {
+    -fx-background-color: #00ff00;
+}
+
+.cell-style-exposed {
+    -fx-background-color: #0000ff;
+}
+
+.cell-style-mine {
+    -fx-background-color: #000000;
+}
