@@ -1,11 +1,32 @@
 package org.example.minesweeper;
 
+import javafx.scene.layout.GridPane;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Game {
-    private int cellsVertical = 0;
-    private int cellsHorizontal = 0;
+    private int cols = 0;
+    private int rows = 0;
+
+    private final GridPane gamePane;
+
+    public Game(GridPane gamePane) {
+        this.gamePane = gamePane;
+
+        // default
+        setCols(8);
+        setRows(8);
+    }
+
+    public void addCells() {
+        for (int y = 0; y < getCols(); ++y) {
+            for (int x = 0; x < getRows(); ++x) {
+                // @todo set mines
+                getGamePane().add(new Cell(false), y, x);
+            }
+        }
+    }
 
     public boolean setGridSize(String optStr) {
         Pattern regex = Pattern.compile("[0-9]+x[0-9]+");
@@ -14,11 +35,8 @@ public class Game {
         if (matcher.find()) {
             String[] tmp = matcher.group().split("x");
 
-            System.out.println("Output: " + optStr);
-            System.out.println("Group: " + matcher.group());
-
-            setCellsHorizontal(Integer.parseInt(tmp[0]));
-            setCellsVertical(Integer.parseInt(tmp[1]));
+            setCols(Integer.parseInt(tmp[0]));
+            setRows(Integer.parseInt(tmp[1]));
 
             return true;
         }
@@ -26,19 +44,27 @@ public class Game {
         return false;
     }
 
-    public int getCellsVertical() {
-        return cellsVertical;
+    public void clearGrid() {
+        getGamePane().getChildren().clear();
     }
 
-    public void setCellsVertical(int cellsVertical) {
-        this.cellsVertical = cellsVertical;
+    public int getCols() {
+        return cols;
     }
 
-    public int getCellsHorizontal() {
-        return cellsHorizontal;
+    public void setCols(int cols) {
+        this.cols = cols;
     }
 
-    public void setCellsHorizontal(int cellsHorizontal) {
-        this.cellsHorizontal = cellsHorizontal;
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public GridPane getGamePane() {
+        return gamePane;
     }
 }

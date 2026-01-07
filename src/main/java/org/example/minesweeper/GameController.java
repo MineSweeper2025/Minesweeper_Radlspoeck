@@ -14,10 +14,15 @@ public class GameController implements Initializable {
     public GridPane gamePane = new GridPane();
     public ComboBox<String> difficultyComboBox = new ComboBox<>();
 
-    private final Game game = new Game();
+    private Game game;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // creat default gamePane Grid
+        game = new Game(gamePane);
+        game.addCells();
+
+        // add Difficulty Options
         difficultyComboBox.getItems().addAll(
                 "Easy \t| (8x8) \t| 10min",
                 "Medium \t| (16x16) \t| 30min",
@@ -29,7 +34,11 @@ public class GameController implements Initializable {
         ComboBox<String> src = (ComboBox<String>) actionEvent.getSource();
         String opt = src.getSelectionModel().getSelectedItem();
 
-        System.out.println(game.setGridSize(opt));
+        // apply option
+        if (game.setGridSize(opt)) {
+            game.clearGrid();
+            game.addCells();
+        }
     }
 
     public void onStartButtonClicked(ActionEvent actionEvent) {
