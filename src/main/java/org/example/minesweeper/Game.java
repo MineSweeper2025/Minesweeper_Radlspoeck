@@ -1,6 +1,5 @@
 package org.example.minesweeper;
 
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 import java.util.regex.Matcher;
@@ -23,12 +22,8 @@ public class Game {
     public void addCells() {
         for (int y = 0; y < getCols(); ++y) {
             for (int x = 0; x < getRows(); ++x) {
-                Button tmp = new Button();
-
-                // tmp -> todo: styleid, onAction
-                tmp.setText(x + ", " + y);
-
-                getGamePane().add(tmp, y, x);
+                // @todo set mines
+                getGamePane().add(new Cell(false), y, x);
             }
         }
     }
