@@ -40,10 +40,12 @@ public class GameController implements Initializable {
                     game.getNumRows()
             );
 
-            // would continue otherwise
-            game.getCountDown().stop();
             game.clearGamePane();
             game.addCells();
+            // would continue otherwise
+            game.getCountDown().stop();
+            // would prevent setMines
+            game.setClickCount(0);
         }
     }
 
@@ -51,5 +53,6 @@ public class GameController implements Initializable {
     }
 
     public void onRestartButtonClicked(ActionEvent actionEvent) {
+
     }
 }

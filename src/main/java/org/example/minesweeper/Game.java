@@ -79,6 +79,9 @@ public class Game {
         }
 
         tmp.setExposed(true);
+        // check because
+        // if last unrevealed cell is surrounded by mines it wont trigger
+        checkForWin();
 
         if (tmp.getNumSurMines() > 0) {
             return;
@@ -95,7 +98,7 @@ public class Game {
         }
     }
 
-    public void setMines() {
+    public void setMines(int ignoreX, int ignoreY) {
         int count = 0;
 
         while (count < getNumMines()) {
@@ -103,9 +106,13 @@ public class Game {
             int posX = (int) (Math.random() * getNumCols());
             int posY = (int) (Math.random() * getNumRows());
 
+            if (posX == ignoreX && posY == ignoreY) {
+                continue;
+            }
+
             Cell tmp = getGameGrid()[posX][posY];
 
-            if (!tmp.isMine() && !tmp.isExposed()) {
+            if (!tmp.isMine()) {
                 tmp.setMine(true);
                 ++count;
 

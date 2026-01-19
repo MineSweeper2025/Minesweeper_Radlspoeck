@@ -23,23 +23,23 @@ public class Cell extends Button {
     private void onClick(MouseEvent mouseEvent) {
         switch (mouseEvent.getButton()) {
             case PRIMARY:
+                // get pos
+                Integer posY = GridPane.getRowIndex(this);
+                Integer posX = GridPane.getColumnIndex(this);
+
                 // on first Click
                 if (getGame().getClickCount() == 0) {
                     //setExposed(true);
-                    getGame().setMines();
+                    getGame().setMines(posX, posY);
                     getGame().getCountDown().start();
+                    // skip this next time
+                    getGame().setClickCount(1);
                 }
 
                 if (!isMarked()) {
                     if (!isMine()) {
-                        // get pos
-                        Integer row = GridPane.getRowIndex(this);
-                        Integer col = GridPane.getColumnIndex(this);
-
-                        getGame().setClickCount(getGame().getClickCount() + 1);
                         // pars first row/col position to 0
-                        getGame().revealCell(col == null ? 0 : col, row == null ? 0 : row);
-                        getGame().checkForWin();
+                        getGame().revealCell(posX == null ? 0 : posX, posY == null ? 0 : posY);
                         return;
                     }
 
