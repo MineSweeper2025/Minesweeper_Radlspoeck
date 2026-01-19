@@ -5,7 +5,7 @@
 > was dazu führen kann das beim ersten click nur ein Feld aufgedeckt wird und man einen schlechten Start bekommt
 >
 > ---
-> Ein ablaufen des Counters oben links beendet das spiel nicht
+> Ein ablaufen des Counters oben rechts beendet das Spiel nicht
 > 
 > ---
 > Style ist von Google Minsweeper inspiriert
