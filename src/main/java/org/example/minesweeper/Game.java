@@ -6,37 +6,113 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Game {
-    private int cols = 0;
-    private int rows = 0;
+    private int numCols = 0;
+    private int numRows = 0;
+    private int numMines = 0;
+    private int clickCount = 0;
 
-    private final GridPane gamePane;
+    private GridPane gamePane;
+    private Cell[][] gameGrid;
 
     public Game(GridPane gamePane) {
-        this.gamePane = gamePane;
+        setGamePane(gamePane);
 
         // default
-        setCols(8);
-        setRows(8);
+        setNumCols(8);
+        setNumRows(8);
+        setNumMines(20);
+        setGameGrid(8,8);
+
+        // draw
+        addCells();
     }
 
     public void addCells() {
-        for (int y = 0; y < getCols(); ++y) {
-            for (int x = 0; x < getRows(); ++x) {
-                // @todo set mines
-                getGamePane().add(new Cell(false), y, x);
+        for (int y = 0; y < getNumRows(); ++y) {
+            for (int x = 0; x < getNumCols(); ++x) {
+                Cell tmp = new Cell(this);
+
+                // add to gamepane & gamegrid at pos xy
+                getGamePane().add(tmp, x, y);
+                getGameGrid()[x][y] = tmp;
             }
         }
     }
 
-    public boolean setGridSize(String optStr) {
-        Pattern regex = Pattern.compile("[0-9]+x[0-9]+");
+    public void revealCell(int posX, int posY) {
+        // check for out of Bounds
+        if (posX < 0 || posX >= getNumCols() || posY < 0 || posY >= getNumRows()) {
+            return;
+        }
+
+        Cell tmp = gameGrid[posX][posY];
+
+        if (tmp.isExposed() || tmp.isMarked()) {
+            return;
+        }
+
+        tmp.setExposed(true);
+
+        if (tmp.getNumSurMines() > 0) {
+            return;
+        }
+
+        // reveal surounding cells
+        for (int y = posY - 1; y <= posY + 1; y++) {
+            for (int x = posX - 1; x <= posX + 1; x++) {
+                // skip this cell
+                if (!(x == posX && y == posY)) {
+                    revealCell(x, y);
+                }
+            }
+        }
+    }
+
+    public void setMines() {
+        int count = 0;
+
+        while (count < getNumMines()) {
+            // get random pos in grid
+            int posX = (int) (Math.random() * getNumCols());
+            int posY = (int) (Math.random() * getNumRows());
+
+            Cell tmp = gameGrid[posX][posY];
+
+            if (!tmp.isMine() && !tmp.isExposed()) {
+                tmp.setMine(true);
+                ++count;
+
+                // set numSurMines for surrounding mines
+                for (int y = posY - 1; y <= posY + 1; y++) {
+                    for (int x = posX - 1; x <= posX + 1; x++) {
+                        // check Bounds
+                        if (x >= 0 && x < getNumCols() && y >= 0 && y < getNumRows()) {
+                            // skip this cell
+                            if (!(x == posX && y == posY)) {
+                                gameGrid[x][y].incNumSurMines();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean setOptions(String optStr) {
+        Pattern regex = Pattern.compile("([0-9]+)x([0-9]+).*?\\(([0-9]+) Mines\\)");
         Matcher matcher = regex.matcher(optStr);
 
         if (matcher.find()) {
-            String[] tmp = matcher.group().split("x");
+            setNumCols(Integer.parseInt(matcher.group(1)));
+            setNumRows(Integer.parseInt(matcher.group(2)));
+            setNumMines(Integer.parseInt(matcher.group(3)));
 
-            setCols(Integer.parseInt(tmp[0]));
-            setRows(Integer.parseInt(tmp[1]));
+            System.out.printf(
+                    "Set Cols: %d, Set Rows: %d, Set Mines %d\n",
+                    getNumCols(),
+                    getNumRows(),
+                    getNumMines()
+            );
 
             return true;
         }
@@ -44,27 +120,55 @@ public class Game {
         return false;
     }
 
-    public void clearGrid() {
-        getGamePane().getChildren().clear();
+    public int getNumCols() {
+        return numCols;
     }
 
-    public int getCols() {
-        return cols;
+    public void setNumCols(int numCols) {
+        this.numCols = numCols;
     }
 
-    public void setCols(int cols) {
-        this.cols = cols;
+    public int getNumRows() {
+        return numRows;
     }
 
-    public int getRows() {
-        return rows;
+    public void setNumRows(int numRows) {
+        this.numRows = numRows;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
+    public int getNumMines() {
+        return numMines;
+    }
+
+    public void setNumMines(int numMines) {
+        this.numMines = numMines;
+    }
+
+    public void setGamePane(GridPane gamePane) {
+        this.gamePane = gamePane;
     }
 
     public GridPane getGamePane() {
         return gamePane;
+    }
+
+    public void clearGamePane() {
+        getGamePane().getChildren().clear();
+    }
+
+    public Cell[][] getGameGrid() {
+        return gameGrid;
+    }
+
+    public void setGameGrid(int numCols, int numRows) {
+        this.gameGrid = new Cell[numCols][numRows];
+    }
+
+    public int getClickCount() {
+        return clickCount;
+    }
+
+    public void setClickCount(int clickCount) {
+        this.clickCount = clickCount;
     }
 }

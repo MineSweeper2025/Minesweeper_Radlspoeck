@@ -1,46 +1,44 @@
 package org.example.minesweeper;
 
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 public class Cell extends Button {
     private boolean isMine = false;
     private boolean isMarked = false;
     private boolean isExposed = false;
+    private int numSurMines = 0;
 
-    public Cell(boolean isMine) {
-        this.setMine(isMine);
+    private Game game;
+
+    public Cell(Game game) {
+        setGame(game);
         // set for x/y in px
-        this.setPrefSize(30, 30);
-        this.getStyleClass().add("cell-style-default");
-        this.setOnMouseClicked(this::onClick);
+        setPrefSize(30, 30);
+        getStyleClass().add("cell-style-default");
+        setOnMouseClicked(this::onClick);
     }
 
     private void onClick(MouseEvent mouseEvent) {
         switch (mouseEvent.getButton()) {
-            // leftclick
-            case MouseButton.PRIMARY -> {
-                if (this.isMine()) {
-                    this.getStyleClass().add("cell-style-mine");
-                    // end game
-                } else {
-                    this.getStyleClass().add("cell-style-exposed");
+            case PRIMARY:
+                // on first Click
+                if (getGame().getClickCount() == 0) {
+                    getGame().setMines();
                 }
 
-                this.setDisable(true);
-                this.setExposed(true);
-            }
-            // rightclick
-            case MouseButton.SECONDARY -> {
-                if (this.isMarked) {
-                    this.getStyleClass().add("cell-style-default");
-                    this.setMarked(false);
-                } else {
-                    this.getStyleClass().add("cell-style-marked");
-                    this.setMarked(true);
-                }
-            }
+                // get pos
+                Integer row = GridPane.getRowIndex(this);
+                Integer col = GridPane.getColumnIndex(this);
+
+                getGame().setClickCount(getGame().getClickCount() + 1);
+                // pars first row/col position to 0
+                getGame().revealCell(col == null ? 0 : col, row == null ? 0 : row);
+                break;
+            case SECONDARY:
+                setMarked(!isMarked());
+                break;
         }
     }
 
@@ -49,7 +47,7 @@ public class Cell extends Button {
     }
 
     public void setMine(boolean mine) {
-        isMine = mine;
+        this.isMine = mine;
     }
 
     public boolean isMarked() {
@@ -57,7 +55,11 @@ public class Cell extends Button {
     }
 
     public void setMarked(boolean marked) {
-        isMarked = marked;
+        this.isMarked = marked;
+
+        getStyleClass().removeAll("cell-style-marked", "cell-style-default");
+        getStyleClass().add(isMarked() ? "cell-style-marked" : "cell-style-default");
+        setText(isMarked() ? "!" : "");
     }
 
     public boolean isExposed() {
@@ -65,6 +67,30 @@ public class Cell extends Button {
     }
 
     public void setExposed(boolean exposed) {
-        isExposed = exposed;
+        this.isExposed = exposed;
+
+        getStyleClass().add(isMine() ? "cell-style-mine" : "cell-style-exposed");
+        setText(String.valueOf(getNumSurMines()));
+        setDisable(true);
+    }
+
+    public int getNumSurMines() {
+        return numSurMines;
+    }
+
+    public void setNumSurMines(int numSurMines) {
+        this.numSurMines = numSurMines;
+    }
+
+    public void incNumSurMines() {
+        setNumSurMines(getNumSurMines() + 1);
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

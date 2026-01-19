@@ -18,15 +18,14 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // creat default gamePane Grid
+        // creat default Pane & Grid
         game = new Game(gamePane);
-        game.addCells();
 
         // add Difficulty Options
         difficultyComboBox.getItems().addAll(
-                "Easy \t| (8x8) \t| 10min",
-                "Medium \t| (16x16) \t| 30min",
-                "Hard \t| (30x16) \t| 99min"
+                "Easy \t| (8x8), (10 Mines) \t| 10min",
+                "Medium \t| (16x16), (40 Mines) \t| 30min",
+                "Hard \t| (30x16), (99 Mines) \t| 99min"
         );
     }
 
@@ -35,8 +34,13 @@ public class GameController implements Initializable {
         String opt = src.getSelectionModel().getSelectedItem();
 
         // apply option
-        if (game.setGridSize(opt)) {
-            game.clearGrid();
+        if (game.setOptions(opt)) {
+            game.setGameGrid(
+                    game.getNumCols(),
+                    game.getNumRows()
+            );
+
+            game.clearGamePane();
             game.addCells();
         }
     }
