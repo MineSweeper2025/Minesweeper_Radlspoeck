@@ -1,0 +1,45 @@
+.cell-style-default {
+    -fx-background-color: #7fb34f;
+    -fx-border-color: #3e6a22;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+.cell-style-exposed {
+    -fx-background-color: #b8a79f;
+    -fx-border-color: #4a332c;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+.cell-style-marked {
+    -fx-background-color: #e6d67f;
+    -fx-border-color: #d4a617;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+.cell-style-mine {
+    -fx-background-color: #cc5c5c;
+    -fx-border-color: #9e1f1f;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}

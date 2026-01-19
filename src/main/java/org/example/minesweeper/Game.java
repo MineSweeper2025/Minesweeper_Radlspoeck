@@ -33,6 +33,7 @@ public class Game {
         Cell tmp = new Cell(this);
         tmp.setText(str);
         tmp.setPrefSize(getGamePane().getWidth(), getGamePane().getHeight());
+        tmp.getStyleClass().add("cell-style-mine");
         tmp.setDisable(true);
 
         clearGamePane();

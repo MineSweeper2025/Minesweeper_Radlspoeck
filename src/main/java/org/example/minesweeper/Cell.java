@@ -79,6 +79,7 @@ public class Cell extends Button {
     public void setExposed(boolean exposed) {
         this.isExposed = exposed;
 
+        getStyleClass().removeAll("cell-style-default", "cell-style-marked", "cell-style-exposed", "cell-style-mine");
         getStyleClass().add(isMine() ? "cell-style-mine" : "cell-style-exposed");
         setText(String.valueOf(getNumSurMines()));
         setDisable(true);

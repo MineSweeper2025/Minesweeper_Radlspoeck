@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -18,6 +19,10 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gamePane.getStylesheets().add(Objects.requireNonNull(
+                getClass().getResource("stylesheets/style.css")).toExternalForm()
+        );
+
         // creat default Pane & Grid & CountDown
         game = new Game(gamePane, new CountDown(timeLabel));
 
