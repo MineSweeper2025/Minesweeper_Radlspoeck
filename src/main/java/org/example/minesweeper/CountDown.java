@@ -49,6 +49,7 @@ public class CountDown {
 
     public void setRemainingSeconds(int remainingSeconds) {
         this.remainingSeconds = remainingSeconds;
+        setInitialSeconds(remainingSeconds);
     }
 
     public int getInitialSeconds() {
