@@ -25,16 +25,26 @@ public class Cell extends Button {
             case PRIMARY:
                 // on first Click
                 if (getGame().getClickCount() == 0) {
+                    //setExposed(true);
                     getGame().setMines();
+                    getGame().getCountDown().start();
                 }
 
-                // get pos
-                Integer row = GridPane.getRowIndex(this);
-                Integer col = GridPane.getColumnIndex(this);
+                if (!isMarked()) {
+                    if (!isMine()) {
+                        // get pos
+                        Integer row = GridPane.getRowIndex(this);
+                        Integer col = GridPane.getColumnIndex(this);
 
-                getGame().setClickCount(getGame().getClickCount() + 1);
-                // pars first row/col position to 0
-                getGame().revealCell(col == null ? 0 : col, row == null ? 0 : row);
+                        getGame().setClickCount(getGame().getClickCount() + 1);
+                        // pars first row/col position to 0
+                        getGame().revealCell(col == null ? 0 : col, row == null ? 0 : row);
+                        getGame().checkForWin();
+                        return;
+                    }
+
+                    getGame().showEndScreen("You Lose");
+                }
                 break;
             case SECONDARY:
                 setMarked(!isMarked());

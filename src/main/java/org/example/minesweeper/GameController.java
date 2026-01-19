@@ -18,8 +18,8 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // creat default Pane & Grid
-        game = new Game(gamePane);
+        // creat default Pane & Grid & CountDown
+        game = new Game(gamePane, new CountDown(timeLabel));
 
         // add Difficulty Options
         difficultyComboBox.getItems().addAll(
@@ -40,6 +40,8 @@ public class GameController implements Initializable {
                     game.getNumRows()
             );
 
+            // would continue otherwise
+            game.getCountDown().stop();
             game.clearGamePane();
             game.addCells();
         }

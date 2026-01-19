@@ -11,20 +11,47 @@ public class Game {
     private int numMines = 0;
     private int clickCount = 0;
 
+    private CountDown countDown;
     private GridPane gamePane;
     private Cell[][] gameGrid;
 
-    public Game(GridPane gamePane) {
+    public Game(GridPane gamePane, CountDown countDown) {
         setGamePane(gamePane);
+        setCountDown(countDown);
 
         // default
         setNumCols(8);
         setNumRows(8);
         setNumMines(20);
-        setGameGrid(8,8);
+        setGameGrid(8, 8);
 
         // draw
         addCells();
+    }
+
+    public void showEndScreen(String str) {
+        Cell tmp = new Cell(this);
+        tmp.setText(str);
+        tmp.setPrefSize(getGamePane().getWidth(), getGamePane().getHeight());
+        tmp.setDisable(true);
+
+        clearGamePane();
+        getGamePane().add(tmp, 0, 0);
+        getCountDown().stop();
+    }
+
+    public void checkForWin() {
+        for (int y = 0; y < getNumRows(); y++) {
+            for (int x = 0; x < getNumCols(); x++) {
+                Cell tmp = getGameGrid()[x][y];
+
+                if (!tmp.isMine() && !tmp.isExposed()) {
+                    return;
+                }
+            }
+        }
+
+        showEndScreen("You Win");
     }
 
     public void addCells() {
@@ -45,7 +72,7 @@ public class Game {
             return;
         }
 
-        Cell tmp = gameGrid[posX][posY];
+        Cell tmp = getGameGrid()[posX][posY];
 
         if (tmp.isExposed() || tmp.isMarked()) {
             return;
@@ -76,7 +103,7 @@ public class Game {
             int posX = (int) (Math.random() * getNumCols());
             int posY = (int) (Math.random() * getNumRows());
 
-            Cell tmp = gameGrid[posX][posY];
+            Cell tmp = getGameGrid()[posX][posY];
 
             if (!tmp.isMine() && !tmp.isExposed()) {
                 tmp.setMine(true);
@@ -89,7 +116,7 @@ public class Game {
                         if (x >= 0 && x < getNumCols() && y >= 0 && y < getNumRows()) {
                             // skip this cell
                             if (!(x == posX && y == posY)) {
-                                gameGrid[x][y].incNumSurMines();
+                                getGameGrid()[x][y].incNumSurMines();
                             }
                         }
                     }
@@ -99,19 +126,25 @@ public class Game {
     }
 
     public boolean setOptions(String optStr) {
-        Pattern regex = Pattern.compile("([0-9]+)x([0-9]+).*?\\(([0-9]+) Mines\\)");
+        // rows, cols, mines, time (min)
+        Pattern regex = Pattern.compile(
+                "([0-9]+)x([0-9]+).*?\\(([0-9]+) Mines\\).*?\\| ([0-9]+)min"
+        );
         Matcher matcher = regex.matcher(optStr);
 
         if (matcher.find()) {
             setNumCols(Integer.parseInt(matcher.group(1)));
             setNumRows(Integer.parseInt(matcher.group(2)));
             setNumMines(Integer.parseInt(matcher.group(3)));
+            // convert min to sec
+            getCountDown().setRemainingSeconds(Integer.parseInt(matcher.group(4)) * 60);
 
             System.out.printf(
-                    "Set Cols: %d, Set Rows: %d, Set Mines %d\n",
+                    "Set Cols: %d, Set Rows: %d, Set Mines %d, Set RemainingSeconds: %d\n",
                     getNumCols(),
                     getNumRows(),
-                    getNumMines()
+                    getNumMines(),
+                    getCountDown().getRemainingSeconds()
             );
 
             return true;
@@ -170,5 +203,13 @@ public class Game {
 
     public void setClickCount(int clickCount) {
         this.clickCount = clickCount;
+    }
+
+    public CountDown getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(CountDown countDown) {
+        this.countDown = countDown;
     }
 }
