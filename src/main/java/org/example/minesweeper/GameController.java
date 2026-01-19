@@ -19,38 +19,32 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // load cell stylesheet
         gamePane.getStylesheets().add(Objects.requireNonNull(
-                getClass().getResource("stylesheets/style.css")).toExternalForm()
+                getClass().getResource("stylesheets/cell_style.css")).toExternalForm()
         );
 
-        // creat default Pane & Grid & CountDown
-        game = new Game(gamePane, new CountDown(timeLabel));
+        // creat default gamePane Grid
+        game = new Game(gamePane);
+        game.addCells();
 
         // add Difficulty Options
         difficultyComboBox.getItems().addAll(
-                "Easy \t| (8x8), (10 Mines) \t| 10min",
-                "Medium \t| (16x16), (40 Mines) \t| 30min",
-                "Hard \t| (30x16), (99 Mines) \t| 99min"
+                "Easy \t| (8x8) \t| 10min",
+                "Medium \t| (16x16) \t| 30min",
+                "Hard \t| (30x16) \t| 99min"
         );
     }
 
     public void onDifficultyOptionClicked(ActionEvent actionEvent) {
+        // get new option
         ComboBox<String> src = (ComboBox<String>) actionEvent.getSource();
         String opt = src.getSelectionModel().getSelectedItem();
 
         // apply option
-        if (game.setOptions(opt)) {
-            game.setGameGrid(
-                    game.getNumCols(),
-                    game.getNumRows()
-            );
-
-            game.clearGamePane();
+        if (game.setGridSize(opt)) {
+            game.clearGrid();
             game.addCells();
-            // would continue otherwise
-            game.getCountDown().stop();
-            // would prevent setMines
-            game.setClickCount(0);
         }
     }
 
@@ -58,6 +52,5 @@ public class GameController implements Initializable {
     }
 
     public void onRestartButtonClicked(ActionEvent actionEvent) {
-
     }
 }
