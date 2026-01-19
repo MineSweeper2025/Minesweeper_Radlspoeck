@@ -39,25 +39,14 @@ public class GameController implements Initializable {
         String opt = src.getSelectionModel().getSelectedItem();
 
         // apply option
-        if (game.setOptions(opt)) {
-            game.setGameGrid(
-                    game.getNumCols(),
-                    game.getNumRows()
-            );
-
-            game.clearGamePane();
-            game.addCells();
-            // would continue otherwise
-            game.getCountDown().stop();
-            // would prevent setMines
-            game.setClickCount(0);
-        }
+        game.setup(opt);
     }
 
     public void onStartButtonClicked(ActionEvent actionEvent) {
+        game.getCountDown().start();
     }
 
     public void onRestartButtonClicked(ActionEvent actionEvent) {
-
+        game.setup(game.getPrevOpt());
     }
 }
