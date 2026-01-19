@@ -43,7 +43,7 @@ public class Cell extends Button {
                         return;
                     }
 
-                    getGame().showEndScreen("You Lose");
+                    getGame().showEndScreen("You Lost");
                 }
                 break;
             case SECONDARY:

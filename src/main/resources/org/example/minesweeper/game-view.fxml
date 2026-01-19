@@ -3,14 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.Separator?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.minesweeper.GameController">
    <children>
       <ComboBox fx:id="difficultyComboBox" layoutX="14.0" layoutY="14.0" onAction="#onDifficultyOptionClicked" prefWidth="150.0" promptText="Difficulty" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-      <Label fx:id="timeLabel" contentDisplay="RIGHT" layoutX="482.0" layoutY="18.0" prefHeight="18.0" prefWidth="104.0" text="TimerPlaceholder" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
+      <Label fx:id="timeLabel" contentDisplay="RIGHT" layoutX="482.0" layoutY="18.0" prefHeight="18.0" prefWidth="104.0" text="Timer in sec" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
        <Separator AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="54.0" />
        <GridPane fx:id="gamePane" layoutX="14.0" layoutY="84.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="84.0">
       </GridPane>

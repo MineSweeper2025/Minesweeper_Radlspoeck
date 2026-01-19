@@ -110,7 +110,9 @@ public class Game {
 
     public void showEndScreen(String str) {
         Cell tmp = new Cell(this);
-        tmp.setText(str);
+        int diff = getCountDown().getInitialSeconds() - getCountDown().getRemainingSeconds();
+
+        tmp.setText(str + "\nwithin " + diff + " Seconds");
         tmp.setPrefSize(getGamePane().getWidth(), getGamePane().getHeight());
         tmp.getStyleClass().add("cell-style-mine");
         tmp.setDisable(true);
@@ -131,7 +133,7 @@ public class Game {
             }
         }
 
-        showEndScreen("You Win");
+        showEndScreen("You Won");
     }
 
     public boolean setOptions(String optStr) {
